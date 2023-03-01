@@ -24,6 +24,38 @@ int main() {
     testCase(t) {
         string str1, str2;
         cin >> str1 >> str2;
+
+        if (str1[0] == str2[0]) {
+            cout << "YES" << nl;
+            cout << str1[0] << "*" << nl;
+        } else if (str1.back() == str2.back()) {
+            cout << "YES" << nl;
+            cout << "*" << str1.back() << nl;
+        } else {
+            bool temp = false;
+            string pre;
+            for (int i = 0; i < str1.size(); i++) {
+                pre = str1.substr(i, 2);
+                for (int j = 0; j < str2.size(); j++) {
+                    string pres = str2.substr(j, 2);
+                    if (pre == pres) {
+                        temp = true;
+                        break;
+                    }
+                }
+
+                if (temp) {
+                    break;
+                }
+            }
+
+            if (temp) {
+                cout << "YES" << nl;
+                cout << "*" << pre << "*" << nl;
+            } else {
+                cout << "NO" << nl;
+            }
+        }
     }
 
     return 0;
