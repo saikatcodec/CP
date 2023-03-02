@@ -21,31 +21,30 @@ typedef tree<int, null_type, less<int>, rb_tree_tag, tree_order_statistics_node_
 int main() {
     FIO;
 
-    ll w, h, n;
-    cin >> w >> h >> n;
+    testCase(t) {
+        ll n;
+        cin >> n;
 
-    ll l = 0, r = inf;
-    while (l < r) {
-        ll mid = l + (r - l) / 2;
+        ll arr[n];
+        for (ll i = 0; i < n; i++) {
+            cin >> arr[i];
+        }
 
-        ll a = (mid / w);
-        ll b = mid / h;
-
-        ll c = inf;
-        if (a != 0) {
-            c = n / a;
-            if (n % a) {
-                c++;
+        ll ans = 0;
+        priority_queue<int> pq;
+        for (ll i = 0; i < n; i++) {
+            if (arr[i] > 0) {
+                pq.push(arr[i]);
+            } else if (arr[i] == 0) {
+                if (!pq.empty()) {
+                    ans += pq.top();
+                    pq.pop();
+                }
             }
         }
-        if (c <= b) {
-            r = mid;
-        } else {
-            l = mid + 1;
-        }
-    }
 
-    cout << r << nl;
+        cout << ans << nl;
+    }
 
     return 0;
 }
