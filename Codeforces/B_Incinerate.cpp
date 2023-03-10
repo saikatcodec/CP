@@ -1,4 +1,5 @@
 #include <bits/stdc++.h>
+
 #include <ext/pb_ds/assoc_container.hpp>
 #include <ext/pb_ds/tree_policy.hpp>
 using namespace __gnu_pbds;
@@ -24,17 +25,47 @@ int main() {
         int n, k;
         cin >> n >> k;
 
-        int h[n], p[n];
+        vector<pair<int, int>> vp(n);
         for (int i = 0; i < n; i++) {
-            cin >> h[i];
+            int a;
+            cin >> a;
+            vp[i].first = a;
         }
         for (int i = 0; i < n; i++) {
-            cin >> p[i];
+            int a;
+            cin >> a;
+            vp[i].second = a;
         }
 
-        sort(p, p + n);
-        while (k > 0) {
-            
+        sort(vp.begin(), vp.end(), [](pair<int, int> a, pair<int, int> b) {
+            return a.second < b.second;
+        });
+
+        auto maxe = *max_element(vp.begin(), vp.end(), [](auto p1, auto p2) {
+            return p1.first < p2.first;
+        });
+
+        int maxEle = maxe.first;
+
+        queue<pair<int, int>> q;
+        for (auto p : vp) {
+            q.push(p);
+        }
+
+        int ans = k;
+        while (maxEle - ans > 0 && k > 0 && !q.empty()) {
+            if (q.front().first > ans) {
+                k -= q.front().second;
+                ans += k;
+            } else {
+                q.pop();
+            }
+        }
+
+        if (ans >= maxEle) {
+            cout << "YES" << nl;
+        } else {
+            cout << "NO" << nl;
         }
     }
 
