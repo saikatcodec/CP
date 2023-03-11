@@ -40,11 +40,18 @@ void printArray(int arr[], int N) {
 }
 
 int main() {
-    int arr[] = {12, 11, 13, 5, 6, 7};
-    int N = sizeof(arr) / sizeof(arr[0]);
+    int n;
+    cout << "Enter array elements number: ";
+    cin >> n;
 
-    heapSort(arr, N);
+    int arr[n];
+    cout << "Enter element: " << endl;
+    for (int i = 0; i < n; i++) {
+        cin >> arr[i];
+    }
+
+    heapSort(arr, n);
 
     cout << "Sorted array is \n";
-    printArray(arr, N);
+    printArray(arr, n);
 }
