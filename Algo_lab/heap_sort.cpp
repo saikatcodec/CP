@@ -1,82 +1,70 @@
 #include <iostream>
 using namespace std;
 
-class Node {
-   public:
-    int data;
-    Node *left;
-    Node *right;
+// To heapify a subtree rooted with node i
+// which is an index in arr[].
+// n is size of heap
+void heapify(int arr[], int N, int i) {
+    // Initialize largest as root
+    int largest = i;
 
-    Node(int data) {
-        this->data = data;
-        left = NULL;
-        right = NULL;
-    }
+    // left = 2*i + 1
+    int l = 2 * i + 1;
 
-    // To delete the node
-    ~Node() {
-        delete left;
-        delete right;
-    }
-};
+    // right = 2*i + 2
+    int r = 2 * i + 2;
 
-void insert(Node *&root, int data) {
-    if (root == NULL) {
-        root = new Node(data);
-        return;
-    }
+    // If left child is larger than root
+    if (l < N && arr[l] > arr[largest])
+        largest = l;
 
-    if (data < root->data) {
-        insert(root->left, data);
-    } else {
-        insert(root->right, data);
+    // If right child is larger than largest
+    // so far
+    if (r < N && arr[r] > arr[largest])
+        largest = r;
+
+    // If largest is not root
+    if (largest != i) {
+        swap(arr[i], arr[largest]);
+
+        // Recursively heapify the affected
+        // sub-tree
+        heapify(arr, N, largest);
     }
 }
 
-void print(Node *root) {
-    Node *temp = root;
+// Main function to do heap sort
+void heapSort(int arr[], int N) {
+    // Build heap (rearrange array)
+    for (int i = N / 2 - 1; i >= 0; i--)
+        heapify(arr, N, i);
 
-    if (temp == NULL) {
-        return;
-    }
+    // One by one extract an element
+    // from heap
+    for (int i = N - 1; i > 0; i--) {
+        // Move current root to end
+        swap(arr[0], arr[i]);
 
-    cout << temp->data << ": ";
-    if (temp->left) {
-        cout << "L" << temp->left->data;
+        // call max heapify on the reduced heap
+        heapify(arr, i, 0);
     }
-    if (temp->right) {
-        cout << " R" << temp->right->data;
-    }
-    cout << endl;
-
-    print(temp->left);
-    print((temp->right));
 }
 
+// A utility function to print array of size n
+void printArray(int arr[], int N) {
+    for (int i = 0; i < N; ++i)
+        cout << arr[i] << " ";
+    cout << "\n";
+}
+
+// Driver's code
 int main() {
-    int arr[] = {10, 7, 9, 8, 12, 11, 13};
-    Node *root;
+    int arr[] = {12, 11, 13, 5, 6, 7};
+    int N = sizeof(arr) / sizeof(arr[0]);
 
-    Node *ten = new Node(10);
-    Node *seven = new Node(7);
-    Node *nine = new Node(9);
-    Node *eight = new Node(8);
-    Node *tweleve = new Node(12);
-    Node *eleven = new Node(11);
-    Node *thirteen = new Node(13);
+    // Function call
+    heapSort(arr, N);
 
-    tweleve->left = eleven;
-    tweleve->right = thirteen;
-
-    eight->left = seven;
-    eight->right = nine;
-
-    ten->left = eight;
-    ten->right = tweleve;
-
-    root = ten;
-
-    print(root);
-
-    return 0;
+    cout << "Sorted array is \n";
+    printArray(arr, N);
 }
