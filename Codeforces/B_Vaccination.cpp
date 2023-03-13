@@ -30,25 +30,20 @@ int main() {
             cin >> arr[i];
         }
 
-        ll track = 0, ans = 0;
+        ll track = k, ans = 0;
         ll ti = arr[0] + d + w;
         for (ll i = 0; i < n; i++) {
-            if ((arr[i] <= ti) && track < k) {
-                track++;
+            if ((arr[i] <= ti) && track > 0) {
+                track--;
             } else {
-                track = 0;
+                track = k;
                 ans++;
                 ti = arr[i] + d + w;
-            }
-
-            if (i == n - 1) {
-                if ((arr[i] <= ti) && track <= k) {
-                    ans++;
-                }
+                i--;
             }
         }
 
-        cout << ans << nl;
+        cout << ++ans << nl;
     }
 
     return 0;
