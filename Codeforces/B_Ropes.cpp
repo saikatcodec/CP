@@ -18,13 +18,16 @@ mt19937 rng(chrono::steady_clock::now().time_since_epoch().count());
 typedef tree<int, null_type, less<int>, rb_tree_tag, tree_order_statistics_node_update> pbds;
 // clang-format on
 
-int pieces(int n, int arr[], float len) {
+bool pieces(int n, int arr[], double len, int k) {
+    if (len <= 0) {
+        return true;
+    }
     int ans = 0;
     for (int i = 0; i < n; i++) {
         ans += floor(arr[i] / len);
     }
 
-    return ans;
+    return (ans >= k) ? true : false;
 }
 
 int main() {
@@ -38,15 +41,13 @@ int main() {
         cin >> arr[i];
     }
 
-    float l = 0.0, r = INT_MAX * 1.0;
-    float ans = 0.0;
-    while (r - l > 0.000001) {
-        float mid = (l + r) * 0.5;
-        cerr << mid << nl;
+    double l = 0.0, r = 1e8;
+    cout << setprecision(7);
+    while (r - l > 1e-6) {
+        double mid = l + (r - l) / 2.0;
 
-        if (pieces(n, arr, mid) >= k) {
+        if (pieces(n, arr, mid, k)) {
             l = mid;
-            ans = mid;
         } else {
             r = mid;
         }
