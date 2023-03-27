@@ -22,10 +22,24 @@ int main() {
     FIO;
 
     testCase(t) {
-        ll n;
-        cin >> n;
+        ll n, m;
+        cin >> n >> m;
 
-        cout << (ll)sqrt(n - 1) << nl;
+        ll l = 1, r = inf;
+        ll ans;
+        while (l <= r) {
+            ll mid = (l + r) / 2;
+
+            ll rem = mid - floor(mid * 1.0 / n);
+            if (rem >= m) {
+                r = mid - 1;
+                ans = mid;
+            } else {
+                l = mid + 1;
+            }
+        }
+
+        cout << ans << nl;
     }
 
     return 0;

@@ -21,12 +21,19 @@ typedef tree<int, null_type, less<int>, rb_tree_tag, tree_order_statistics_node_
 int main() {
     FIO;
 
-    testCase(t) {
-        ll n;
-        cin >> n;
+    ll n, m;
+    cin >> n >> m;
 
-        cout << (ll)sqrt(n - 1) << nl;
+    ll ans = abs(n - ceil(m / 2.0)) + 1;
+    if (m & 1) {
+        ans++;
     }
+
+    if (m <= n) {
+        ans = min(ans, abs(n - m));
+    }
+
+    cout << ans << nl;
 
     return 0;
 }

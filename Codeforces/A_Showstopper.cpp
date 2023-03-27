@@ -22,10 +22,36 @@ int main() {
     FIO;
 
     testCase(t) {
-        ll n;
+        int n;
         cin >> n;
 
-        cout << (ll)sqrt(n - 1) << nl;
+        int a[n], b[n];
+        for (int i = 0; i < n; i++) {
+            cin >> a[i];
+        }
+        for (int i = 0; i < n; i++) {
+            cin >> b[i];
+        }
+
+        int mxA = a[n - 1];
+        int mxB = b[n - 1];
+
+        for (int i = n - 2; i >= 0; i--) {
+            if (mxA < a[i]) {
+                swap(a[i], b[i]);
+            } else if (mxB < b[i]) {
+                swap(a[i], b[i]);
+            }
+        }
+
+        int lastA = *max_element(a, a + n);
+        int lastB = *max_element(b, b + n);
+
+        if (lastA == a[n - 1] && lastB == b[n - 1]) {
+            cout << "Yes" << nl;
+        } else {
+            cout << "No" << nl;
+        }
     }
 
     return 0;
