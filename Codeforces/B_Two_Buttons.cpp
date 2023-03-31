@@ -24,16 +24,26 @@ int main() {
     ll n, m;
     cin >> n >> m;
 
-    ll ans = abs(n - ceil(m / 2.0)) + 1;
-    if (m & 1) {
-        ans++;
-    }
+    if (n >= m) {
+        cout << n - m << nl;
+    } else {
+        int ans = 0;
+        while (m > n) {
+            if (m & 1) {
+                m++;
+                ans++;
+            } else {
+                m /= 2;
+                ans++;
+            }
+        }
 
-    if (m <= n) {
-        ans = min(ans, abs(n - m));
-    }
+        if (n >= m) {
+            ans += (n - m);
+        }
 
-    cout << ans << nl;
+        cout << ans << nl;
+    }
 
     return 0;
 }
