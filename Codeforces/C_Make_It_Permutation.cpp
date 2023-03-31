@@ -25,55 +25,29 @@ int main() {
         ll n, c, d;
         cin >> n >> c >> d;
 
-        ll arr[n];
-        unordered_map<int, int> mp;
-        bool cont = true;
-        ll contP = 0;
+        ll sol = 0;
+        set<int> st;
         for (ll i = 0; i < n; i++) {
-            cin >> arr[i];
-            mp[arr[i]]++;
-            if (cont && arr[i] == i + 1) {
-                contP = i + 1;
+            int x;
+            cin >> x;
+            if (st.count(x) == 0) {
+                st.insert(x);
             } else {
-                cont = false;
+                sol += c;
             }
         }
 
-        ll minEle = *min_element(arr, arr + n);
-        ll maxEle = *max_element(arr, arr + n);
-        ll ans = INT_MAX;
-
-        bool all = all_of(mp.begin(), mp.end(), [](pair<int, int> p) {
-            return p.second == 1;
-        });
-
-        if (all) {
-            ll insertAble = maxEle - mp.size();
-            ans = min(ans, insertAble * d);
+        ll ans = INT64_MAX;
+        ll i = 1;
+        ll sz = st.size();
+        for (auto ele : st) {
+            ll cost = (ele - i) * d + (sz - i) * c;
+            ans = min(ans, cost);
+            i++;
         }
 
-        bool flag = true;
-        for (ll i = 0; i < contP; i++) {
-            if (mp[arr[i]] >= 2) {
-                flag = false;
-                break;
-            }
-        }
-        if (flag && contP > 0) {
-            ans = min(ans, (n - contP) * c);
-        }
-        ll deleteAble = 0;
-        for (auto p : mp) {
-            deleteAble += p.second;
-        }
-
-        ll now = (minEle - 1) * d + (deleteAble - 1) * c;
-        ans = min(ans, now);
-
-        now = 1 * d + deleteAble * c;
-        ans = min(ans, now);
-
-        cout << ans << nl;
+        ans = min(ans, sz * c + d);
+        cout << ans + sol << nl;
     }
 
     return 0;
