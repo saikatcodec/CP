@@ -4,12 +4,10 @@
 #include <ext/pb_ds/tree_policy.hpp>
 using namespace __gnu_pbds;
 using namespace std;
-// clang-format off
 #define nl "\n"
 #define ps(x, y) fixed << setprecision(y) << x
 #define testCase(x) int x; cin >> x; while (x--)
 #define FIO ios_base::sync_with_stdio(0); cin.tie(0); cout.tie(0)
-// clang-format on
 
 int main() {
     FIO;
