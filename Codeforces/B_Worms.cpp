@@ -18,14 +18,6 @@ mt19937 rng(chrono::steady_clock::now().time_since_epoch().count());
 typedef tree<int, null_type, less<int>, rb_tree_tag, tree_order_statistics_node_update> pbds;
 // clang-format on
 
-bool check(pair<int, int> pp, int fla) {
-    if (fla >= pp.second && fla <= pp.first) {
-        return true;
-    }
-
-    return false;
-}
-
 int main() {
     FIO;
 
