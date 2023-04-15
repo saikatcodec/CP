@@ -1,4 +1,5 @@
 #include <bits/stdc++.h>
+
 #include <ext/pb_ds/assoc_container.hpp>
 #include <ext/pb_ds/tree_policy.hpp>
 using namespace __gnu_pbds;
@@ -20,7 +21,29 @@ typedef tree<int, null_type, less<int>, rb_tree_tag, tree_order_statistics_node_
 int main() {
     FIO;
 
-    
+    testCase(t) {
+        int n;
+        cin >> n;
+
+        int arr[n];
+        for (int i = 0; i < n; i++) {
+            cin >> arr[i];
+        }
+
+        unordered_map<int, int> mp;
+        for (int i = 0; i < n; i++) {
+            mp[arr[i] - (i + 1)]++;
+        }
+
+        ll ans = 0;
+        for (auto it : mp) {
+            if (it.second > 1) {
+                ans += (it.second * 1LL * (it.second - 1) / 2);
+            }
+        }
+
+        cout << ans << nl;
+    }
 
     return 0;
 }
