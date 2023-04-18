@@ -22,7 +22,7 @@ class Graph {
         gp[b].push_back(a);
     }
 
-    void bfs(int st, int dest) {
+    void bfs(int st) {
         queue<int> q;
 
         q.push(st);
@@ -39,10 +39,6 @@ class Graph {
                     dist[n] += (dist[fnt] + 1);
                     parent[n] = fnt;
                     visited[n] = true;
-
-                    if (n == dest) {
-                        return;
-                    }
                 }
             }
         }
@@ -53,7 +49,7 @@ class Graph {
     }
 
     vector<int> getPath(int a, int b) {
-        bfs(a, b);
+        bfs(a);
 
         vector<int> path;
         while (parent[b] != -1) {
@@ -91,7 +87,7 @@ int main() {
 
     cout << "Distance of 9 " << g.getDist(9) << endl;
 
-    vector<int> path = g.getPath(2, 8);
+    vector<int> path = g.getPath(3, 8);
     cout << "Shortest Path are: ";
     for (auto ele : path) {
         cout << ele << " ";
