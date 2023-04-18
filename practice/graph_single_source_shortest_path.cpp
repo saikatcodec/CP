@@ -3,7 +3,6 @@ using namespace std;
 
 class Graph {
     map<int, list<int>> gp;
-    map<int, bool> visited;
     map<int, int> dist;
     map<int, int> parent;
     int V;
@@ -11,10 +10,6 @@ class Graph {
    public:
     Graph(int v) {
         this->V = v;
-
-        for (int i = 1; i <= v; i++) {
-            parent[i] = -1;
-        }
     }
 
     void addEdges(int a, int b) {
@@ -23,7 +18,12 @@ class Graph {
     }
 
     void bfs(int st) {
+        map<int, bool> visited;
         queue<int> q;
+        parent.clear();
+        for (int i = 1; i <= V; i++) {
+            parent[i] = -1;
+        }
 
         q.push(st);
         visited[st] = true;
@@ -36,7 +36,7 @@ class Graph {
             for (auto n : gp[fnt]) {
                 if (!visited[n]) {
                     q.push(n);
-                    dist[n] += (dist[fnt] + 1);
+                    dist[n] = dist[fnt] + 1;
                     parent[n] = fnt;
                     visited[n] = true;
                 }
@@ -82,7 +82,7 @@ int main() {
     }
 
     // cout << "BFS ";
-    // g.bfs(2, 8);
+    g.bfs(1);
     // cout << endl;
 
     cout << "Distance of 9 " << g.getDist(9) << endl;
