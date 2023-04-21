@@ -1,14 +1,11 @@
 #include <bits/stdc++.h>
-
 #include <ext/pb_ds/assoc_container.hpp>
 #include <ext/pb_ds/tree_policy.hpp>
 using namespace __gnu_pbds;
 using namespace std;
-// clang-format off
 #define nl "\n"
 #define ll long long
 #define FIO ios_base::sync_with_stdio(0); cin.tie(0); cout.tie(0)
-// clang-format on
 
 int v = 100002;
 vector<vector<int>> adj(v);
