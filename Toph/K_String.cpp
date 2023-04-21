@@ -27,12 +27,35 @@ int main() {
     string str;
     cin >> str;
 
-    set<char> s;
+    map<char, int> freq;
     for (int i = 0; i < n; i++) {
-        s.insert(str[i]);
+        freq[str[i]]++;
     }
 
-    cout << abs(k - (int)s.size()) << nl;
+    vector<pair<int, char>> sf;
+    for (auto it : freq) {
+        sf.push_back({it.second, it.first});
+    }
+
+    if (k > freq.size()) {
+    } else {
+        sort(sf.begin(), sf.end());
+
+        int rem = sf.size() - k;
+        int ans = 0;
+        cerr << sf.size() << nl;
+        int i = 1;
+        for (auto it : sf) {
+            if (rem < i) {
+                break;
+            }
+
+            ans += it.first;
+            i++;
+        }
+
+        cout << ans << nl;
+    }
 
     return 0;
 }
