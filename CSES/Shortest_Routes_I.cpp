@@ -19,7 +19,7 @@ typedef tree<int, null_type, less<int>, rb_tree_tag, tree_order_statistics_node_
 // clang-format on
 
 #define N 100002
-vector<ll> dist(N, INT_MAX);
+vector<ll> dist(N, inf);
 vector<vector<pair<int, ll>>> adj(N);
 
 void addEdges(int a, int b, ll c) {
