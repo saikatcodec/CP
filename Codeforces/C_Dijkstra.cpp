@@ -29,26 +29,20 @@ void addEdges(int a, int b, int c) {
 }
 
 void dijkstra(int src) {
-    set<pair<int, int>> p;
+    unordered_set<int> p;
 
     dist[src] = 0;
-    p.insert({dist[src], src});
+    p.insert( src);
 
     while (!p.empty()) {
         auto frnt = *(p.begin());
         p.erase(p.begin());
-        int fntChild = frnt.second, fntDist = frnt.first;
 
-        for (auto ele : adj[fntChild]) {
-            if (fntDist + ele.second < dist[ele.first]) {
-                auto q = p.find({dist[ele.first], ele.first});
-                if (q != p.end()) {
-                    p.erase(q);
-                }
-
-                dist[ele.first] = fntDist + ele.second;
-                p.insert({dist[ele.first], ele.first});
-                parent[ele.first] = fntChild;
+        for (auto ele : adj[frnt]) {
+            if (dist[frnt] + ele.second < dist[ele.first]) {
+                dist[ele.first] = dist[frnt] + ele.second;
+                p.insert(ele.first);
+                parent[ele.first] = frnt;
             }
         }
     }

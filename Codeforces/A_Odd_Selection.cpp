@@ -1,4 +1,5 @@
 #include <bits/stdc++.h>
+
 #include <ext/pb_ds/assoc_container.hpp>
 #include <ext/pb_ds/tree_policy.hpp>
 using namespace __gnu_pbds;
@@ -20,7 +21,38 @@ typedef tree<int, null_type, less<int>, rb_tree_tag, tree_order_statistics_node_
 int main() {
     FIO;
 
-    
+    testCase(t) {
+        int n, x;
+        cin >> n >> x;
+
+        int arr[n], even = 0, odd = 0;
+        for (int i = 0; i < n; i++) {
+            cin >> arr[i];
+
+            if (arr[i] & 1)
+                odd++;
+            else
+                even++;
+        }
+
+        if (odd & 1) {
+            if (odd >= x && x & 1) {
+                cout << "Yes" << nl;
+            } else if ((x > odd) && (x - odd <= even)) {
+                cout << "Yes" << nl;
+            } else {
+                cout << "No" << nl;
+            }
+        } else if (odd > 0 && odd % 2 == 0) {
+            if (abs(x - (odd - 1)) <= even) {
+                cout << "Yes" << nl;
+            } else {
+                cout << "No" << nl;
+            }
+        } else {
+            cout << "No" << nl;
+        }
+    }
 
     return 0;
 }
