@@ -35,22 +35,14 @@ int main() {
                 even++;
         }
 
-        if (odd & 1) {
-            if (odd >= x && x & 1) {
-                cout << "Yes" << nl;
-            } else if ((x > odd) && (x - odd <= even)) {
-                cout << "Yes" << nl;
-            } else {
-                cout << "No" << nl;
-            }
-        } else if (odd > 0 && odd % 2 == 0) {
-            if (abs(x - (odd - 1)) <= even) {
-                cout << "Yes" << nl;
-            } else {
-                cout << "No" << nl;
-            }
-        } else {
+        if (n == x and odd % 2 == 0) {
             cout << "No" << nl;
+        } else if (odd == n && x % 2 == 0) {
+            cout << "No" << nl;
+        } else if (odd < 1) {
+            cout << "No" << nl;
+        } else {
+            cout << "Yes" << nl;
         }
     }
 
