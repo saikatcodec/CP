@@ -19,37 +19,42 @@ typedef tree<int, null_type, less<int>, rb_tree_tag, tree_order_statistics_node_
 // clang-format on
 
 #define N 100001
-vector<int> parent(N, -1);
-vector<int> dist(N, INT_MAX);
-vector<vector<pair<int, int>>> adj(N);
+vector<ll> parent(N, -1);
+vector<ll> dist(N, inf);
+vector<vector<pair<ll, ll>>> adj(N);
 
-void addEdges(int a, int b, int c) {
+void addEdges(ll a, ll b, ll c) {
     adj[a].push_back({b, c});
     adj[b].push_back({a, c});
 }
 
-void dijkstra(int src) {
-    unordered_set<int> p;
+void dijkstra(ll src) {
+    set<pair<ll, ll>> p;
 
     dist[src] = 0;
-    p.insert( src);
+    p.insert({dist[src], src});
 
     while (!p.empty()) {
         auto frnt = *(p.begin());
         p.erase(p.begin());
 
-        for (auto ele : adj[frnt]) {
-            if (dist[frnt] + ele.second < dist[ele.first]) {
-                dist[ele.first] = dist[frnt] + ele.second;
-                p.insert(ele.first);
-                parent[ele.first] = frnt;
+        for (auto ele : adj[frnt.second]) {
+            if (dist[frnt.second] + ele.second < dist[ele.first]) {
+                auto t = p.find({dist[ele.first], ele.first});
+                if (t != p.end()) {
+                    p.erase(t);
+                }
+
+                dist[ele.first] = dist[frnt.second] + ele.second;
+                p.insert({dist[ele.first], ele.first});
+                parent[ele.first] = frnt.second;
             }
         }
     }
 }
 
-vector<int> getPath(int src, int dest) {
-    vector<int> path;
+vector<ll> getPath(ll src, ll dest) {
+    vector<ll> path;
 
     while (parent[dest] != -1) {
         path.push_back(dest);
@@ -65,11 +70,11 @@ vector<int> getPath(int src, int dest) {
 int main() {
     FIO;
 
-    int n, m;
+    ll n, m;
     cin >> n >> m;
 
-    for (int i = 0; i < m; i++) {
-        int a, b, c;
+    for (ll i = 0; i < m; i++) {
+        ll a, b, c;
         cin >> a >> b >> c;
 
         addEdges(a, b, c);
@@ -77,10 +82,10 @@ int main() {
 
     dijkstra(1);
 
-    if (dist[n] == INT_MAX) {
+    if (dist[n] == inf) {
         cout << -1 << nl;
     } else {
-        vector<int> path = getPath(1, n);
+        vector<ll> path = getPath(1, n);
         for (auto ele : path) {
             cout << ele << " ";
         }
