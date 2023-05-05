@@ -3,7 +3,6 @@ using namespace std;
 
 #define N 10005
 vector<int> dist(N, INT_MAX);
-vector<int> parent(N, -1);
 vector<vector<pair<int, int>>> adj(N);
 
 void addEdges(int a, int b, int c) {
