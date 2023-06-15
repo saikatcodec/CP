@@ -1,4 +1,5 @@
 #include <bits/stdc++.h>
+
 #include <ext/pb_ds/assoc_container.hpp>
 #include <ext/pb_ds/tree_policy.hpp>
 using namespace __gnu_pbds;
@@ -17,27 +18,28 @@ mt19937 rng(chrono::steady_clock::now().time_since_epoch().count());
 typedef tree<int, null_type, less<int>, rb_tree_tag, tree_order_statistics_node_update> pbds;
 // clang-format on
 
-int mem[100000];
+ll fib(ll n) {
+    ll f[n + 2];
+    ll i;
+    f[0] = 0;
+    f[1] = 1;
 
-int rodCut(int price[], int length){
-    if(mem[length]==-1){
-        int temp = -1;
-        for (int i = 0; i <= length; i++) {
-            temp = max(temp, price[i-1]+rodCut(price, length-1));
-        }
-        mem[length]=temp;
+    for (i = 2; i <= n; i++) {
+        f[i] = f[i - 1] + f[i - 2];
     }
-    return mem[length];
+    return f[n];
 }
+
 int main() {
     FIO;
-    memset(mem, -1, sizeof(mem));
-    mem[0]=0;
-    int length; cin>>length;
-    int price[length]; 
-    for (int i = 0; i < length; i++) {
-        cin>>price[i];
+
+    while (true) {
+        ll n;
+        cin >> n;
+
+        if (n == 0) break;
+        cout << fib(n) << nl;
     }
-    cout<<rodCut(price, length)<<endl;
+
     return 0;
 }
