@@ -18,25 +18,6 @@ mt19937 rng(chrono::steady_clock::now().time_since_epoch().count());
 typedef tree<int, null_type, less<int>, rb_tree_tag, tree_order_statistics_node_update> pbds;
 // clang-format on
 
-pair<int, int> degree(int n, map<int, list<int>> adj) {
-    map<int, int> dt;
-
-    for (int i = 1; i <= n; i++) {
-        dt[adj[i].size()]++;
-    }
-
-    map<int, int>::reverse_iterator it = dt.rbegin();
-
-    auto x = *(it);
-    auto y = *(++it);
-
-    if (x.second < y.second) {
-        return {x.first, y.first};
-    } else {
-        return {y.first, x.first};
-    }
-}
-
 int main() {
     FIO;
 
@@ -45,17 +26,28 @@ int main() {
         cin >> n >> m;
 
         map<int, list<int>> adj;
+        map<int, int> cnt;
 
         for (int i = 0; i < m; i++) {
             int a, b;
             cin >> a >> b;
 
+            cnt[a]++;
+            cnt[b]++;
             adj[a].push_back(b);
             adj[b].push_back(a);
         }
 
-        auto ans = degree(n, adj);
-        cout << ans.first << " " << ans.second - 1 << nl;
+        map<int, int> parent;
+
+        for (auto c : cnt) {
+            if (c.second == 1) {
+                auto p = adj[c.first];
+                parent[*p.begin()]++;
+            }
+        }
+
+        cout << parent.size() << " " << (parent.begin()->second) << nl;
     }
 
     return 0;
