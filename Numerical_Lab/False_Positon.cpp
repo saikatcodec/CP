@@ -2,41 +2,36 @@
 #include <iostream>
 using namespace std;
 
+/**
+ * To calculate the volue of f(x) of an equation
+ */
 double f(double x) {
     // replace this with the actual function you want to find the root of
     return x * x * x * x - 3 * x * x * x + 5 * x * x + 5 * x - 5;
 }
 
-double ModFalsePos(double xl, double xu, double es, double &ea, int &iter) {
-    iter = 1e9;
-    double xr;
-    double fl = f(xl);
-    double fu = f(xu);
+// Prints root of func(x) in interval [a, b]
+double regulaFalsi(double a, double b) {
+    cout << "Loading..." << endl;
+    int MAX_ITER = 1e9;
+    double c = a;  // Initialize result
 
-    while (iter--) {
-        double xrold = xr;
-        xr = xu - fu * (xl - xu) / (fl - fu);
-        double fr = f(xr);
+    for (int i = 0; i < MAX_ITER; i++) {
+        // Find the point that touches x axis
+        c = (a * f(b) - b * f(a)) / (f(b) - f(a));
 
-        if (xr != 0) {
-            ea = fabs((xr - xrold) / xr) * 100;
-        }
-        double test = fl * fr;
-        if (test < 0) {
-            xu = xr;
-            fu = f(xu);
-        } else if (test > 0) {
-            xl = xr;
-            fl = f(xl);
-        } else {
-            ea = 0;
-        }
-        if (ea < es) {
+        // Check if the above found point is root
+        if (f(c) == 0)
             break;
-        }
+
+        // Decide the side to repeat the steps
+        else if (f(c) * f(a) < 0)
+            b = c;
+        else
+            a = c;
     }
 
-    return xr;
+    return c;
 }
 
 int main() {
@@ -50,16 +45,8 @@ int main() {
         exit(0);
     }
 
-    double es, ea;
-    int iter;
-    cout << "Estimate error (0.0001): ";
-    cin >> es;
-
-    double root = ModFalsePos(low, high, es, ea, iter);
-
+    double root = regulaFalsi(low, high);
     cout << "Root of the function " << root << endl;
-    cout << "Appoximate error: " << ea << endl;
-    cout << "Number of iteration: " << 1e9 - iter << endl;
 
     return 0;
 }
