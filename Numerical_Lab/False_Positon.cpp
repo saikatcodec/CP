@@ -13,7 +13,7 @@ double f(double x) {
 // Prints root of func(x) in interval [a, b]
 double regulaFalsi(double a, double b) {
     cout << "Loading..." << endl;
-    int MAX_ITER = 1e9;
+    int MAX_ITER = 1e6;
     double c = a;  // Initialize result
 
     for (int i = 0; i < MAX_ITER; i++) {
