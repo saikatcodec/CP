@@ -1,6 +1,9 @@
 #include <bits/stdc++.h>
 using namespace std;
 
+/** 
+ * To calculate the volue of f(x) of an equation
+ */
 double f(double x) {
     return x * x * x * x - 3 * x * x * x + 5 * x * x + 5 * x - 5;
 }
@@ -16,12 +19,13 @@ int main() {
         exit(0);
     }
 
-    double preci;
-    cout << "Estimate precision (0.0001): ";
-    cin >> preci;
-
+    double preci = 0.0001; // estimate error to terminate the loop
     double ans;
 
+    /**
+     * If difference of high and low is greater than estimate error
+     * then continue
+     */
     while ((high - low) >= preci) {
         double mid = low + (high - low) / 2;
         
