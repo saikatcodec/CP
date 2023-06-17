@@ -1,45 +1,51 @@
 #include <bits/stdc++.h>
 using namespace std;
 
+/**
+ * To calculate the volue of f(x) of an equation
+ */
+double f(double x) {
+    return (x * x * x * x - 3 * x * x * x + 5 * x * x + 5 * x - 5);
+}
+
+/**
+ * Write f(x) as x = g(x) and
+ * define g(x) here
+ */
 double g(double x) {
     return (-x * x * x * x + 3 * x * x * x - 5 * x * x + 5) / 5;
 }
 
-double fixedPos(double x0, double es, double &ea, int &iter) {
-    iter = 1e9;
+/**
+ * calculate fixed position
+ */
+void fixedPos(double x0, double es) {
+    int iter = 0; // Count iteration
     double xrold, xr = x0;
-    while (iter--) {
-        xrold = xr;
-        xr = g(xrold);
+    do {
+        xrold = xr; // old root 
+        xr = g(xrold); // calculate new root
+        iter++; // increement iteration
 
-        if (xr != 0) {
-            ea = fabs((xr - xrold) / xr) * 100;
+        // if iter cross the max iteration terminate the calculation
+        if (iter > 1e6) {
+            cout << "Not Convergent.";
+            return;
         }
-        cout << "Step " << 1e9 - iter << " root is " << xr << " error is " << ea << endl;
-        if (ea < es) {
-            break;
-        }
-    }
+    } while (fabs(f(xr)) > es);
 
-    return xr;
+    // Print root and number of iteration
+    cout << "Root of the function " << xr << endl;
+    cout << "Number of iteration: " << iter << endl;
 }
 
 int main() {
-    double low;
+    double low, es = 0.0001;
     cout << "The function x^4-3x^3+5x^2+5x-5" << endl;
     cout << "Estimate root: ";
     cin >> low;
 
-    double es, ea;
-    int iter;
-    cout << "Estimate error (0.0001): ";
-    cin >> es;
-
-    double root = fixedPos(low, es, ea, iter);
-
-    cout << "Root of the function " << root << endl;
-    cout << "Appoximate error: " << ea << endl;
-    cout << "Number of iteration: " << 1e9 - iter << endl;
+    fixedPos(low, es);
 
     return 0;
 }
