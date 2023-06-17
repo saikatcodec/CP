@@ -2,15 +2,15 @@
 // equations using secant method
 #include <bits/stdc++.h>
 using namespace std;
+
 // function takes value of x and returns f(x)
-float f(float x) {
-    // we are taking equation as x^3+x-1
-    float f = pow(x, 3) + x - 1;
-    return f;
+double f(double x) {
+    // we are taking equation as x^4-3x^3+5x^2+5x-5
+    return x * x * x * x - 3 * x * x * x + 5 * x * x + 5 * x - 5;
 }
 
-void secant(float x1, float x2, float E) {
-    float n = 0, xm, x0, c;
+void secant(double x1, double x2, double E) {
+    double iter = 0, xm, x0, c;
     if (f(x1) * f(x2) < 0) {
         do {
             // calculate the intermediate value
@@ -24,7 +24,7 @@ void secant(float x1, float x2, float E) {
             x2 = x0;
 
             // update number of iteration
-            n++;
+            iter++;
 
             // if x0 is the root of equation then break the loop
             if (c == 0)
@@ -34,7 +34,7 @@ void secant(float x1, float x2, float E) {
                                        // until the convergence
 
         cout << "Root of the given equation=" << x0 << endl;
-        cout << "No. of iterations = " << n << endl;
+        cout << "No. of iterations = " << iter << endl;
     } else
         cout << "Can not find a root in the given interval";
 }
@@ -42,7 +42,12 @@ void secant(float x1, float x2, float E) {
 // Driver code
 int main() {
     // initializing the values
-    float x1 = 0, x2 = 1, E = 0.0001;
+    double x1, x2, E = 0.0001;
+    cout << "Function is x^4-3x^3+5x^2+5x-5" << endl;
+    cout << "Enter two guess (0 1): ";
+    cin >> x1 >> x2;
+
     secant(x1, x2, E);
+
     return 0;
 }
