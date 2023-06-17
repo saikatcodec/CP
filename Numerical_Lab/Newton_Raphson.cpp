@@ -3,31 +3,41 @@
 #include <iostream>
 using namespace std;
 
-float fn(float x) {
-    return x * x + (3 * x) + 1;
+/**
+ * To calculate the volue of f(x) of an equation
+ */
+double fn(double x) {
+    return x * x * x * x - 3 * x * x * x + 5 * x * x + 5 * x - 5;
 }
 
-float de(float x) {
-    return 2 * x + 3;
+/**
+ * Defining derivative of de(x).
+ * As you change fn(x), change this function also.
+ */
+double de(double x) {
+    return 4 * x * x * x - 9 * x * x + 10 * x + 5;
 }
 
 int main() {
-    float a, e = 0, z;
-    cout << "Function is x^2 + 3x + 1" << endl;
-    cout << "Enter Number: ";
-    cin >> a;
-    float es, err;
-    cout << "Estimate precision: ";
-    cin >> es;
+    double init, root;
+    cout << "Function is x^4-3x^3+5x^2+5x-5" << endl;
+    cout << "Enter initial root: ";
+    cin >> init;
+
+    double es = 0.0001, err;
+    int iter = 0;
 
     do {
-        e++;
-        z = a - (fn(a) / de(a));
-        err = fabs((z - a) / z) * 100;
-        cout << "The iterative " << e << " root is " << z << " error is " << err << endl;
-        a = z;
+        iter++;
+
+        // calculate root by newton raphson formula
+        root = init - (fn(init) / de(init));
+        err = fabs((root - init) / root) * 100;  // find error
+
+        init = root;
     } while (err > es);
 
-    cout << "The root is " << z << endl;
+    cout << "The root is " << root << endl;
+    cout << "Number of iteration: " << iter << endl;
     return 0;
 }
