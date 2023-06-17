@@ -11,17 +11,19 @@ double f(double x) {
 }
 
 // Prints root of func(x) in interval [a, b]
-double regulaFalsi(double a, double b) {
+void regulaFalsi(double a, double b) {
     cout << "Loading..." << endl;
-    int MAX_ITER = 1e6;
-    double c = a;  // Initialize result
+    int iter = 0; // For count the iteration
+    double c = a, fn;  // Initialize result
+    double es = 0.0001;
 
-    for (int i = 0; i < MAX_ITER; i++) {
+    do {
         // Find the point that touches x axis
         c = (a * f(b) - b * f(a)) / (f(b) - f(a));
 
         // Check if the above found point is root
-        if (f(c) == 0)
+        fn = f(c);
+        if (fn == 0)
             break;
 
         // Decide the side to repeat the steps
@@ -29,9 +31,13 @@ double regulaFalsi(double a, double b) {
             b = c;
         else
             a = c;
-    }
 
-    return c;
+        iter++;
+    } while (fabs(fn) >= es);
+
+    
+    cout << "Root of the function " << c << endl;
+    cout << "After the " << iter << " no of iteration" << endl;
 }
 
 int main() {
@@ -45,8 +51,7 @@ int main() {
         exit(0);
     }
 
-    double root = regulaFalsi(low, high);
-    cout << "Root of the function " << root << endl;
+    regulaFalsi(low, high);
 
     return 0;
 }
