@@ -22,6 +22,16 @@ int main() {
     FIO;
 
     testCase(t) {
+        ll n;
+        cin >> n;
+
+        ll ans = 0;
+        while (n) {
+            ans += n;
+            n /= 2;
+        }
+
+        cout << ans << nl;
     }
 
     return 0;
