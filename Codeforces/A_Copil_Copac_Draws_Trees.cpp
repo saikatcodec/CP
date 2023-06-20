@@ -26,7 +26,7 @@ void dfs(int src, int cnt, int prev, int parnt) {
     for (auto u : tr[src]) {
         if (u.first != parnt) {
             int tmp = cnt + (u.second < prev);
-            dfs(u.first, tmp, u.second, u.first);
+            dfs(u.first, tmp, u.second, src);
         }
     }
 }
