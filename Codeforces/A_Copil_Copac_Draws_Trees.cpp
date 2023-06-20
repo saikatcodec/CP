@@ -48,10 +48,7 @@ int main() {
         }
 
         ans = 0;
-        // dfs(1, 1, 0, -1);
-        for (auto e : tr[1]) {
-            cout << e.first << " " << e.second << nl;
-        }
+        dfs(1, 1, 0, -1);
         cout << ans << nl;
     }
 
