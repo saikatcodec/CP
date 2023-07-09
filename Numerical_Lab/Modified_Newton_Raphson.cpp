@@ -1,45 +1,35 @@
-#include <cmath>
-#include <iostream>
+#include <bits/stdc++.h>
 using namespace std;
 
 double f(double x) {
-    double a = pow(x, 3.0) - x - 11.0;
-    return a;
+    return x * x * x * x - 3 * x * x * x + 5 * x * x + 5 * x - 5;
 }
-double fprime(double x) {
-    double b = 3 * pow(x, 2.0) - 1.0;
-    return b;
+
+double dx(double x) {
+    return 4 * x * x * x - 9 * x * x + 10 * x + 5;
 }
-double fprime2(double x) {
-    double b = 6 * x;
-    return b;
+
+double ddx(double x) {
+    return 12 * x * x - 18 * x + 10;
 }
 
 int main() {
-    double x, x1, e, fx, fx1, error;
-    cout << "Enter the initial guess\n";
-    cin >> x1;
-    cout << "Enter desired accuracy\n";
-    cin >> e;
-    fx = f(x);
-    fx1 = fprime(x);
-    cout << "x{i}"
-         << "    "
-         << "x{i+1}"
-         << "        "
-         << "|x{i+1}-x{i}|"
-         << "      "
-         << "Error" << endl;
-    double ff2;
-    while (fabs(x1 - x) / x1 >= e) {
-        x = x1;
-        fx = f(x);
-        fx1 = fprime(x);
-        ff2 = fprime2(x);
-        x1 = x - ((fx * fx1) / ((fx1 * fx1) - (fx * ff2)));
-        error = fabs((x1 - x) / x1) * 100;
-        cout << x << "     " << x1 << "           " << fabs(x1 - x) << "     " << error << endl;
-    }
-    cout << "The root of the equation is " << x1 << endl;
+    double x;
+    cin >> x;
+    
+    double root, es;
+    int iter = 0;
+    
+    do {
+        root = x - ((f(x) * dx(x)) / ((dx(x) * dx(x)) - (ddx(x) * f(x))));
+        iter++;
+        
+        es = fabs((root - x) / root) * 100;
+        x = root;
+    } while (es > .0001);
+    
+    cout << root << endl;
+    cout << iter << endl;
+
     return 0;
 }
