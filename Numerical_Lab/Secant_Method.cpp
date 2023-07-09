@@ -9,34 +9,21 @@ double f(double x) {
     return x * x * x * x - 3 * x * x * x + 5 * x * x + 5 * x - 5;
 }
 
-void secant(double x1, double x2, double E) {
-    double iter = 0, xm, x0, c;
-    if (f(x1) * f(x2) < 0) {
-        do {
-            // calculate the intermediate value
-            x0 = (x1 * f(x2) - x2 * f(x1)) / (f(x2) - f(x1));
+void secant(double a, double b, double E) {
+    double c, es;
+    int iter = 0;
 
-            // check if x0 is root of equation or not
-            c = f(x1) * f(x0);
+    do {
+        c = b - (f(b) * (a - b)) / (f(a) - f(b));
+        es = fabs((c - b) / c) * 100;
+        iter++;
 
-            // update the value of interval
-            x1 = x2;
-            x2 = x0;
+        a = b;
+        b = c;
+    } while (es > 0.001);
 
-            // update number of iteration
-            iter++;
-
-            // if x0 is the root of equation then break the loop
-            if (c == 0)
-                break;
-            xm = (x1 * f(x2) - x2 * f(x1)) / (f(x2) - f(x1));
-        } while (fabs(xm - x0) >= E);  // repeat the loop
-                                       // until the convergence
-
-        cout << "Root of the given equation=" << x0 << endl;
-        cout << "No. of iterations = " << iter << endl;
-    } else
-        cout << "Can not find a root in the given interval";
+    cout << "Root of the given equation = " << c << endl;
+    cout << "No. of iterations = " << iter << endl;
 }
 
 // Driver code
