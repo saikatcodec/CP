@@ -18,11 +18,19 @@ mt19937 rng(chrono::steady_clock::now().time_since_epoch().count());
 typedef tree<int, null_type, less<int>, rb_tree_tag, tree_order_statistics_node_update> pbds;
 // clang-format on
 
-int main()
-{
+int main() {
     FIO;
 
-    
+    char str[100002], *ind;
+    cin >> str;
+
+    if ((ind = strstr(str, "AB")) && (strstr(ind + 2, "BA"))) {
+        cout << "YES" << nl;
+    } else if ((ind = strstr(str, "BA")) && (strstr(ind + 2, "AB"))) {
+        cout << "YES" << nl;
+    } else {
+        cout << "NO" << nl;
+    }
 
     return 0;
 }
