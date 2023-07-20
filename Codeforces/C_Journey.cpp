@@ -23,18 +23,18 @@ vector<vector<ll>> tr(N);
 vector<ll> leaf;
 map<ll, ll> dist;
 
-void dfs(ll src, ll prnt) {
-    dist[src] = dist[prnt] + 1;
-    if (tr[src].size() == 1) {
-        leaf.push_back(src);
-        return;
-    }
+double dfs(ll src, ll prnt) {
+    double sum = 0;
+    ll cnt = 0;
 
     for (auto p : tr[src]) {
         if (p != prnt) {
-            dfs(p, src);
+            sum += dfs(p, src) + 1;
+            cnt++;
         }
     }
+
+    return cnt ? sum * 1.0 / cnt : 0;
 }
 
 int main() {
@@ -51,14 +51,7 @@ int main() {
         tr[b].push_back(a);
     }
 
-    double total = 0.0;
-    dfs(1, 0);
-
-    for (auto ele : leaf) {
-        total += (dist[ele] - 1) * 1.0;
-    }
-    ll size = leaf.size();
-    double ans = total / (size * 1.0);
+    double ans = dfs(1, 0);
     cout << ps(ans, 15) << nl;
 
     return 0;
