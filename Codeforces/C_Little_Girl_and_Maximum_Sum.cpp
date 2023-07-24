@@ -32,7 +32,7 @@ int main() {
     }
 
     int pre[n + 2] = {0};
-    while (--q) {
+    while (q--) {
         int l, r;
         cin >> l >> r;
 
@@ -44,9 +44,22 @@ int main() {
         pre[i] = pre[i] + pre[i - 1];
     }
 
-    for (auto ele : pre) {
-        cout << ele << " ";
+    priority_queue<int> ind;
+    for (int i = 1; i <= n; i++) {
+        ind.push(pre[i]);
     }
+
+    ll ans = 0;
+    while (!pq.empty()) {
+        ll num = pq.top();
+        int cnt = ind.top();
+        ans += (num * 1LL * cnt);
+
+        pq.pop();
+        ind.pop();
+    }
+
+    cout << ans << nl;
 
     return 0;
 }
