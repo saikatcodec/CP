@@ -25,9 +25,9 @@ int main() {
     cin >> r >> x >> y >> x1 >> y1;
 
     double d = sqrt(pow(abs(x - x1), 2) * 1.00 + pow(abs(y - y1), 2) * 1.00);
-    ll ans = ceil(d / r * 1.00);
+    ll ans = ceil(d / (r * 2.00));
 
-    cout << (ans ? ans - 1 : ans) << nl;
+    cout << ans << nl;
 
     return 0;
 }
