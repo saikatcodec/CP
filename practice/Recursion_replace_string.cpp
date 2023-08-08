@@ -2,7 +2,7 @@
 using namespace std;
 
 void replaceStr(char str[], int ind) {
-    if (str[ind] == '\0') {
+    if (str[ind] == '\0' or str[ind + 1] == '\0') {
         return;
     }
 
