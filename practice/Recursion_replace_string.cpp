@@ -10,7 +10,7 @@ void replaceStr(char str[], int ind) {
         for (int i = strlen(str) + 2; i >= ind + 4; i--) {
             str[i] = str[i - 2];
         }
-        
+
         str[ind] = '3';
         str[ind + 1] = '.';
         str[ind + 2] = '1';
@@ -21,10 +21,12 @@ void replaceStr(char str[], int ind) {
 
 int main() {
     char str[200];
+    cout << "Enter string: ";
     cin >> str;
 
     replaceStr(str, 0);
 
+    cout << "Replaced String: ";
     cout << str << endl;
 
     return 0;
