@@ -31,18 +31,34 @@ int query(int s, int e, int l, int r, int ind) {
 }
 
 void update(int s, int e, int i, int val, int ind) {
-    if (s == e) {
-        tr[ind] = val;
+    if (i < s || i > e) {
         return;
     }
 
-    if (i < s || i > e) {
+    if (s == e) {
+        tr[ind] = val;
         return;
     }
 
     int m = (s + e) >> 1;
     update(s, m, i, val, 2 * ind);
     update(m + 1, e, i, val, 2 * ind + 1);
+    tr[ind] = min(tr[2 * ind], tr[2 * ind + 1]);
+}
+
+void updateRange(int s, int e, int l, int r, int val, int ind) {
+    if (l > e || r < s) {
+        return;
+    }
+
+    if (s == e) {
+        tr[ind] += val;
+        return;
+    }
+
+    int m = (s + e) >> 1;
+    updateRange(s, m, l, r, val, 2 * ind);
+    updateRange(m + 1, e, l, r, val, 2 * ind + 1);
     tr[ind] = min(tr[2 * ind], tr[2 * ind + 1]);
 }
 
@@ -57,7 +73,8 @@ int main() {
     }
 
     build(arr, 0, n - 1, 1);
-    update(0, n - 1, 2, -10, 1);
+    // update(0, n - 1, 2, -10, 1);
+    updateRange(0, n - 1, 2, 4, 10, 1);
 
     int q;
     cin >> q;
