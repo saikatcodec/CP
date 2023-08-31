@@ -30,6 +30,22 @@ int query(int s, int e, int l, int r, int ind) {
     return min(lf, rt);
 }
 
+void update(int s, int e, int i, int val, int ind) {
+    if (s == e) {
+        tr[ind] = val;
+        return;
+    }
+
+    if (i < s || i > e) {
+        return;
+    }
+
+    int m = (s + e) >> 1;
+    update(s, m, i, val, 2 * ind);
+    update(m + 1, e, i, val, 2 * ind + 1);
+    tr[ind] = min(tr[2 * ind], tr[2 * ind + 1]);
+}
+
 int main() {
     int n;
     cin >> n;
@@ -41,6 +57,7 @@ int main() {
     }
 
     build(arr, 0, n - 1, 1);
+    update(0, n - 1, 2, -10, 1);
 
     int q;
     cin >> q;
