@@ -1,3 +1,4 @@
+
 #include <bits/stdc++.h>
 
 #include <ext/pb_ds/assoc_container.hpp>
@@ -28,7 +29,7 @@ void build(int arr[], int s, int e, int ind) {
     int m = (s + e) >> 1;
     build(arr, s, m, 2 * ind);
     build(arr, m + 1, e, 2 * ind + 1);
-    tr[ind] = tr[2 * ind] + tr[2 * ind + 1];
+    tr[ind] = min(tr[2 * ind], tr[2 * ind + 1]);
 }
 
 void update(int l, int s, int e, int val, int ind) {
@@ -44,12 +45,12 @@ void update(int l, int s, int e, int val, int ind) {
     int m = (s + e) >> 1;
     update(l, s, m, val, 2 * ind);
     update(l, m + 1, e, val, 2 * ind + 1);
-    tr[ind] = tr[2 * ind] + tr[2 * ind + 1];
+    tr[ind] = min(tr[2 * ind], tr[2 * ind + 1]);
 }
 
 ll query(int l, int r, int s, int e, int ind) {
     if (l > e || r < s) {
-        return 0;
+        return INT_MAX;
     }
 
     if (l <= s && e <= r) {
@@ -57,7 +58,7 @@ ll query(int l, int r, int s, int e, int ind) {
     }
 
     int m = (s + e) >> 1;
-    return query(l, r, s, m, 2 * ind) + query(l, r, m + 1, e, 2 * ind + 1);
+    return min(query(l, r, s, m, 2 * ind), query(l, r, m + 1, e, 2 * ind + 1));
 }
 
 int main() {
@@ -66,7 +67,7 @@ int main() {
     int n, q;
     cin >> n >> q;
 
-    tr.resize(4 * n + 1, 0);
+    tr.resize(4 * n + 1, INT_MAX);
     int arr[n];
     for (int i = 0; i < n; i++) {
         cin >> arr[i];

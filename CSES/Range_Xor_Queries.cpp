@@ -18,7 +18,7 @@ mt19937 rng(chrono::steady_clock::now().time_since_epoch().count());
 typedef tree<int, null_type, less<int>, rb_tree_tag, tree_order_statistics_node_update> pbds;
 // clang-format on
 
-vector<ll> tr;
+vector<int> tr;
 void build(int arr[], int s, int e, int ind) {
     if (s == e) {
         tr[ind] = arr[s];
@@ -28,26 +28,10 @@ void build(int arr[], int s, int e, int ind) {
     int m = (s + e) >> 1;
     build(arr, s, m, 2 * ind);
     build(arr, m + 1, e, 2 * ind + 1);
-    tr[ind] = tr[2 * ind] + tr[2 * ind + 1];
+    tr[ind] = tr[2 * ind] ^ tr[2 * ind + 1];
 }
 
-void update(int l, int s, int e, int val, int ind) {
-    if (l < s || l > e) {
-        return;
-    }
-
-    if (s == e) {
-        tr[ind] = val;
-        return;
-    }
-
-    int m = (s + e) >> 1;
-    update(l, s, m, val, 2 * ind);
-    update(l, m + 1, e, val, 2 * ind + 1);
-    tr[ind] = tr[2 * ind] + tr[2 * ind + 1];
-}
-
-ll query(int l, int r, int s, int e, int ind) {
+int query(int l, int r, int s, int e, int ind) {
     if (l > e || r < s) {
         return 0;
     }
@@ -57,7 +41,7 @@ ll query(int l, int r, int s, int e, int ind) {
     }
 
     int m = (s + e) >> 1;
-    return query(l, r, s, m, 2 * ind) + query(l, r, m + 1, e, 2 * ind + 1);
+    return query(l, r, s, m, 2 * ind) ^ query(l, r, m + 1, e, 2 * ind + 1);
 }
 
 int main() {
@@ -74,14 +58,10 @@ int main() {
     build(arr, 0, n - 1, 1);
 
     while (q--) {
-        int l, r, o;
-        cin >> o >> l >> r;
+        int l, r;
+        cin >> l >> r;
 
-        if (o == 1) {
-            update(l - 1, 0, n - 1, r, 1);
-        } else {
-            cout << query(l - 1, r - 1, 0, n - 1, 1) << nl;
-        }
+        cout << query(l - 1, r - 1, 0, n - 1, 1) << nl;
     }
 
     return 0;
