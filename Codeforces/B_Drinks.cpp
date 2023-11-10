@@ -21,22 +21,18 @@ typedef tree<int, null_type, less<int>, rb_tree_tag, tree_order_statistics_node_
 int main() {
     FIO;
 
-    int n, t;
-    cin >> n >> t;
+    int n;
+    cin >> n;
 
-    string str;
-    cin >> str;
-
-    for (int j = 1; j <= t; j++) {
-        for (int i = 0; i < n - 1; i++) {
-            if (str[i] == 'B' && str[i + 1] == 'G') {
-                swap(str[i], str[i + 1]);
-                i++;
-            }
-        }
+    double frct = 0;
+    for (int i = 0; i < n; i++) {
+        int a;
+        cin >> a;
+        frct += (a / 100.0);
     }
 
-    cout << str << nl;
+    double ans = (frct / n) * 100;
+    cout << ps(ans, 12) << nl;
 
     return 0;
 }
