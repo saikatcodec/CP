@@ -1,28 +1,48 @@
 #include <bits/stdc++.h>
+
+#include <ext/pb_ds/assoc_container.hpp>
+#include <ext/pb_ds/tree_policy.hpp>
+using namespace __gnu_pbds;
 using namespace std;
+// clang-format off
+#define nl "\n"
+#define ll long long
+#define setbits(x) __builtin_popcountll(x)
+#define zrobits(x) __builtin_ctzll(x)
+#define mod 1000000007
+#define inf 1e18
+#define ps(x, y) fixed << setprecision(y) << x
+#define testCase(x) int x; cin >> x; while (x--)
+#define FIO ios_base::sync_with_stdio(0); cin.tie(0); cout.tie(0)
+mt19937 rng(chrono::steady_clock::now().time_since_epoch().count());
+typedef tree<int, null_type, less<int>, rb_tree_tag, tree_order_statistics_node_update> pbds;
+// clang-format on
 
-int main()
-{
-    int cnt = 1;
-    string str;
-    cin >> str;
+int main() {
+    FIO;
 
-    for (int i = 0; i < str.length() - 1; i++)
-    {
-        if (str[i] == str[i + 1])
-        {
-            cnt++;
-            if (cnt >= 7)
-                break;
-        }
-        else
-            cnt = 1;
+    int n;
+    cin >> n;
+
+    map<string, int> team;
+    while (n--) {
+        string str;
+        cin >> str;
+
+        team[str]++;
     }
 
-    if (cnt >= 7)
-        cout << "YES" << endl;
-    else
-        cout << "NO" << endl;
+    int maxG = -1;
+    string maxT = "";
+
+    for (auto p : team) {
+        if (p.second > maxG) {
+            maxG = p.second;
+            maxT = p.first;
+        }
+    }
+
+    cout << maxT << nl;
 
     return 0;
 }
