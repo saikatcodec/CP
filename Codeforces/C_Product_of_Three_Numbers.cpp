@@ -26,7 +26,7 @@ vector<int> primeDivisor(int n) {
         n = n / 2;
     }
 
-    for (int i = 3; i <= sqrt(n); i = i + 2) {
+    for (int i = 3; i * i <= n; i = i + 2) {
         while (n % i == 0) {
             div.push_back(i);
             n /= i;
@@ -51,21 +51,37 @@ int main() {
         if (div.size() < 3) {
             cout << "NO" << nl;
         } else {
-            vector<int> ans;
-            ans.push_back(div[0]);
-            ans.push_back(div[1]);
+            int first = div[0];
 
-            int s = 0;
-            for (int i = 2; i < div.size(); i++) {
-                s += div[i];
+            int second = 1, i = 1;
+            for (; i < div.size(); i++) {
+                second *= div[i];
+                if (first != second) {
+                    i++;
+                    break;
+                }
             }
-            ans.push_back(s);
 
-            cout << "YES" << nl;
-            for (auto ele : ans) {
-                cout << ele << " ";
+            int third = 1;
+            for (; i < div.size(); i++) {
+                third *= div[i];
             }
-            cout << nl;
+
+            if (first != 1 && second != 1 && third != 1) {
+                set<int> ff;
+                ff.insert(first);
+                ff.insert(second);
+                ff.insert(third);
+
+                if (ff.size() == 3) {
+                    cout << "YES" << nl;
+                    cout << first << " " << second << " " << third << nl;
+                } else {
+                    cout << "NO" << nl;
+                }
+            } else {
+                cout << "NO" << nl;
+            }
         }
     }
 
