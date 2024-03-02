@@ -21,20 +21,11 @@ typedef tree<int, null_type, less<int>, rb_tree_tag, tree_order_statistics_node_
 vector<int> primeFactor(int n) {
     vector<int> pf;
 
-    while (n % 2 == 0) {
-        pf.push_back(2);
-        n /= 2;
-    }
-
-    for (int i = 3; i * i <= n; i++) {
+    for (int i = 1; i * i <= n; i++) {
         if (n % i == 0) {
             pf.push_back(i);
-            n /= i;
+            if (i != (n / i)) pf.push_back(n / i);
         }
-    }
-
-    if (n > 2) {
-        pf.push_back(n);
     }
 
     sort(pf.begin(), pf.end());
@@ -53,34 +44,16 @@ int main() {
         } else {
             vector div = primeFactor(n);
 
+            int ans = 1;
             for (int v : div) {
-                cerr << v << " ";
-            }
-            cerr << nl;
-
-            int p1 = -1, val = 1;
-            for (int v : div) {
-                val *= v;
-                int tmp = n / val;
+                int tmp = n / v;
                 if (k >= tmp) {
-                    p1 = tmp;
+                    ans = v;
                     break;
                 }
             }
 
-            int p2 = -1;
-            val = 1;
-            vector<int>::reverse_iterator it;
-            for (it = div.rbegin(); it != div.rend(); it++) {
-                val *= (*it);
-                int tmp = n / val;
-                if (k >= tmp) {
-                    p2 = tmp;
-                    break;
-                }
-            }
-
-            cout << min(p1, p2) << nl;
+            cout << ans << nl;
         }
     }
 
