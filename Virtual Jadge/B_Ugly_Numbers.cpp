@@ -21,10 +21,28 @@ typedef tree<int, null_type, less<int>, rb_tree_tag, tree_order_statistics_node_
 int main() {
     FIO;
 
-    int primeFactor[] = {2, 3, 5};
-    vector<int> ans;
+    set<ll> st;
+    st.insert(1);
 
-    for ()
+    auto it = st.begin();
+
+    for (int i = 0; i < 1500; i++) {
+        ll num = *it;
+
+                st.insert(num * 2);
+        st.insert(num * 3);
+        st.insert(num * 5);
+        it++;
+    }
+
+    it = st.begin();
+    for (int i = 2; i <= 1500; i++) {
+        it++;
+    }
+
+    ll ans = *it;
+
+    cout << "The 1500'th ugly number is " << ans << "." << nl;
 
     return 0;
 }
