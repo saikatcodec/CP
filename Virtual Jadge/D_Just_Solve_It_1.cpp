@@ -18,26 +18,25 @@ mt19937 rng(chrono::steady_clock::now().time_since_epoch().count());
 typedef tree<int, null_type, less<int>, rb_tree_tag, tree_order_statistics_node_update> pbds;
 // clang-format on
 
-map<int, int> primeDiv(int n) {
-    map<int, int> divs;
+#define N 1000002
+int spf[N], bpf[N];
 
-    while (n % 2 == 0) {
-        divs[2]++;
-        n /= 2;
+void sieve() {
+    for (int i = 2; i < N; i++) {
+        spf[i] = i;
+        bpf[i] = i;
     }
 
-    for (int i = 3; i * i <= n; i += 2) {
-        while (n % i == 0) {
-            divs[i]++;
-            n /= i;
+    for (int i = 2; i < N; i++) {
+        if (spf[i] == i) {
+            for (int j = 2 * i; j < N; j += i) {
+                bpf[j] = i;
+                if (spf[j] == j) {
+                    spf[j] = i;
+                }
+            }
         }
     }
-
-    if (n > 2) {
-        divs[n]++;
-    }
-
-    return divs;
 }
 
 int calPow(int p, int e) {
@@ -52,6 +51,7 @@ int calPow(int p, int e) {
 
 int32_t main() {
     FIO;
+    sieve();
 
     int n;
     cin >> n;
@@ -62,10 +62,16 @@ int32_t main() {
     }
 
     for (int i = 0; i < n; i++) {
-        map<int, int> divs = primeDiv(arr[i]);
+        int lpf = spf[arr[i]];
+        int gpf = bpf[arr[i]];
 
-        int lpf = (*divs.begin()).first;
-        int gpf = (*divs.rbegin()).first;
+        int tmp = arr[i];
+        map<int, int> divs;
+        while (tmp != 1) {
+            divs[spf[tmp]]++;
+            tmp /= spf[tmp];
+        }
+
         int w = divs.size();
         int ohm = 0, d = 1;
         for (auto p : divs) {
