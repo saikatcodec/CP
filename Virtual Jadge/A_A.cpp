@@ -18,30 +18,18 @@ mt19937 rng(chrono::steady_clock::now().time_since_epoch().count());
 typedef tree<int, null_type, less<int>, rb_tree_tag, tree_order_statistics_node_update> pbds;
 // clang-format on
 
-#define N 1000001
-int ans[N];
-int freq[N + 3];
-
 int main() {
     FIO;
 
-    int n;
-    cin >> n;
+    testCase(t) {
+        int n, m;
+        cin >> n >> m;
 
-    for (int i = 0; i < n; i++) {
-        int x;
-        cin >> x;
-        freq[x]++;
-    }
+        int totArea = n * n * m;
+        int pair = m - 1;
+        int smallArea = (n / 2) * (n / 2);
 
-    for (int i = 1; i < N; i++) {
-        for (int j = i; j < N; j += i) {
-            ans[i] += freq[j];
-        }
-    }
-
-    for (int i = 1; i < N; i++) {
-        cout << ans[i] << nl;
+        cout << totArea - (smallArea * pair * 2) << nl;
     }
 
     return 0;

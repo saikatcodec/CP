@@ -18,30 +18,21 @@ mt19937 rng(chrono::steady_clock::now().time_since_epoch().count());
 typedef tree<int, null_type, less<int>, rb_tree_tag, tree_order_statistics_node_update> pbds;
 // clang-format on
 
-#define N 1000001
-int ans[N];
-int freq[N + 3];
-
 int main() {
     FIO;
 
-    int n;
-    cin >> n;
+    int c = 0;
+    testCase(t) {
+        string url;
+        cin >> url;
 
-    for (int i = 0; i < n; i++) {
-        int x;
-        cin >> x;
-        freq[x]++;
-    }
-
-    for (int i = 1; i < N; i++) {
-        for (int j = i; j < N; j += i) {
-            ans[i] += freq[j];
+        if (url[4] != 's') {
+            string ur = url.substr(0, 4);
+            string l = url.substr(4);
+            cout << "Case " << ++c << ": " << ur + 's' + l << nl;
+        } else {
+            cout << "Case " << ++c << ": " << url << nl;
         }
-    }
-
-    for (int i = 1; i < N; i++) {
-        cout << ans[i] << nl;
     }
 
     return 0;

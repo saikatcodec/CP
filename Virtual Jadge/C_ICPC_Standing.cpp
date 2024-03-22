@@ -18,30 +18,20 @@ mt19937 rng(chrono::steady_clock::now().time_since_epoch().count());
 typedef tree<int, null_type, less<int>, rb_tree_tag, tree_order_statistics_node_update> pbds;
 // clang-format on
 
-#define N 1000001
-int ans[N];
-int freq[N + 3];
-
 int main() {
     FIO;
 
-    int n;
-    cin >> n;
+    int c = 0;
+    testCase(t) {
+        int p, s, r;
+        cin >> p >> s >> r;
 
-    for (int i = 0; i < n; i++) {
-        int x;
-        cin >> x;
-        freq[x]++;
-    }
-
-    for (int i = 1; i < N; i++) {
-        for (int j = i; j < N; j += i) {
-            ans[i] += freq[j];
+        cout << "Case " << ++c << ": ";
+        if ((p == s) && r > 1) {
+            cout << "No" << nl;
+        } else {
+            cout << "Yes" << nl;
         }
-    }
-
-    for (int i = 1; i < N; i++) {
-        cout << ans[i] << nl;
     }
 
     return 0;
