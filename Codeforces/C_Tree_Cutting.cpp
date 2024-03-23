@@ -20,24 +20,22 @@ typedef tree<int, null_type, less<int>, rb_tree_tag, tree_order_statistics_node_
 
 vector<vector<int>> adj;
 vector<bool> vist;
+int cmp = 0;
 
-int lowDegree(int n) {
-    for (int i = 1; i <= n; i++) {
-        if (adj[i].size() == 1) {
-            return i;
-        }
-    }
-}
-
-int dfs(int src) {
+int dfs(int src, int x) {
+    int size = 0;
     vist[src] = true;
 
     int cnt = 0;
     for (int n : adj[src]) {
-        if (!vist[n]) cnt = max(cnt, dfs(n));
+        if (!vist[n]) cnt += dfs(n, x);
     }
 
-    return cnt + 1;
+    if (size >= x) {
+        return 0;
+    } else {
+        return size;
+    }
 }
 
 int main() {
@@ -61,9 +59,10 @@ int main() {
             adj[v].push_back(u);
         }
 
-        int root = lowDegree(n);
-        int depth = dfs(root);
-        cout << depth / (k + 1) << nl;
+        int l = 1, r = n;
+        while (l < r) {
+            int mid = (l + r + 1) >> 1;
+        }
     }
 
     return 0;
