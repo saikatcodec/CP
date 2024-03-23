@@ -23,15 +23,15 @@ vector<bool> vist;
 int cmp = 0;
 
 int dfs(int src, int x) {
-    int size = 0;
+    int size = 1;
     vist[src] = true;
 
-    int cnt = 0;
     for (int n : adj[src]) {
-        if (!vist[n]) cnt += dfs(n, x);
+        if (!vist[n]) size += dfs(n, x);
     }
 
     if (size >= x) {
+        cmp++;
         return 0;
     } else {
         return size;
@@ -43,13 +43,11 @@ int main() {
 
     testCase(t) {
         adj.clear();
-        vist.clear();
 
         int n, k;
         cin >> n >> k;
 
         adj.resize(n + 2);
-        vist.resize(n + 2);
 
         for (int i = 0; i < n - 1; i++) {
             int u, v;
@@ -61,8 +59,19 @@ int main() {
 
         int l = 1, r = n;
         while (l < r) {
+            vist.clear();
+            vist.resize(n + 2, false);
             int mid = (l + r + 1) >> 1;
+            cmp = 0;
+            dfs(1, mid);
+            if (cmp >= (k + 1)) {
+                l = mid;
+            } else {
+                r = mid - 1;
+            }
         }
+
+        cout << l << nl;
     }
 
     return 0;
