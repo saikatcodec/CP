@@ -18,7 +18,8 @@ mt19937 rng(chrono::steady_clock::now().time_since_epoch().count());
 typedef tree<int, null_type, less<int>, rb_tree_tag, tree_order_statistics_node_update> pbds;
 // clang-format on
 
-vector<vector<int>> adj(100002);
+vector<vector<int>> adj;
+vector<bool> vist;
 
 int lowDegree(int n) {
     for (int i = 1; i <= n; i++) {
@@ -28,15 +29,29 @@ int lowDegree(int n) {
     }
 }
 
+int dfs(int src) {
+    vist[src] = true;
+
+    int cnt = 0;
+    for (int n : adj[src]) {
+        if (!vist[n]) cnt = max(cnt, dfs(n));
+    }
+
+    return cnt + 1;
+}
+
 int main() {
     FIO;
 
     testCase(t) {
         adj.clear();
-        adj.resize(100002);
+        vist.clear();
 
         int n, k;
         cin >> n >> k;
+
+        adj.resize(n + 2);
+        vist.resize(n + 2);
 
         for (int i = 0; i < n - 1; i++) {
             int u, v;
@@ -45,6 +60,10 @@ int main() {
             adj[u].push_back(v);
             adj[v].push_back(u);
         }
+
+        int root = lowDegree(n);
+        int depth = dfs(root);
+        cout << depth / (k + 1) << nl;
     }
 
     return 0;
