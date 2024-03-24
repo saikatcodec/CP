@@ -6,7 +6,7 @@ using namespace __gnu_pbds;
 using namespace std;
 // clang-format off
 #define nl "\n"
-#define ll long long
+#define int long long
 #define setbits(x) __builtin_popcountll(x)
 #define zrobits(x) __builtin_ctzll(x)
 #define mod 1000000007
@@ -18,7 +18,7 @@ mt19937 rng(chrono::steady_clock::now().time_since_epoch().count());
 typedef tree<int, null_type, less<int>, rb_tree_tag, tree_order_statistics_node_update> pbds;
 // clang-format on
 
-int main() {
+int32_t main() {
     FIO;
 
     testCase(t) {
@@ -33,13 +33,13 @@ int main() {
             totSum %= mod;
         }
 
-        ll sSum = 0, maxSum = 0;
+        int sSum = 0, maxSum = 0;
 
         for (int i = 0; i < n; i++) {
             sSum += arr[i];
 
             if (sSum > maxSum) {
-                maxSum = sSum % mod;
+                maxSum = sSum;
             }
 
             if (sSum < 0) {
