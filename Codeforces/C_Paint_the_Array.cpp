@@ -40,31 +40,40 @@ int main() {
             gg = __gcd(gg, arr[i]);
         }
 
-        cerr << gg << " " << gm << nl;
-
-        bool flag1 = true, flag2 = true;
-        for (int i = 0; i < n; i += 2) {
-            if (arr[i] % gg == 0) {
-                flag1 = false;
-                break;
-            }
-        }
-
-        for (int i = 1; i < n; i += 2) {
-            if (arr[i] % gm == 0) {
-                flag2 = false;
-                break;
-            }
-        }
+        bool flag = true;
 
         if (gm == gg) {
             cout << 0 << nl;
         } else {
+            if (gm == 1) {
+                for (int i = 0; i < n; i += 2) {
+                    if (arr[i] % gg == 0) {
+                        flag = false;
+                        break;
+                    }
                 }
-        if (flag1 && flag2) {
-            cout << max(gm, gg) << nl;
-        } else {
-            cout << 0 << nl;
+
+                if (!flag) {
+                    cout << 0 << nl;
+                } else {
+                    cout << gg << nl;
+                }
+            } else if (gg == 1) {
+                for (int i = 1; i < n; i += 2) {
+                    if (arr[i] % gm == 0) {
+                        flag = false;
+                        break;
+                    }
+                }
+
+                if (!flag) {
+                    cout << 0 << nl;
+                } else {
+                    cout << gm << nl;
+                }
+            } else {
+                cout << max(gg, gm) << nl;
+            }
         }
     }
 
