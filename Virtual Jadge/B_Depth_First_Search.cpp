@@ -55,7 +55,11 @@ int main() {
         }
     }
 
-    dfs(1);
+    for (int i = 1; i <= n; i++) {
+        if (start[i] == 0) {
+            dfs(i);
+        }
+    }
 
     for (int i = 1; i <= n; i++) {
         cout << i << " " << start[i] << " " << finish[i] << nl;
