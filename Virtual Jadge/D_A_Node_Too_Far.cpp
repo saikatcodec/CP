@@ -10,7 +10,7 @@ using namespace std;
 #define setbits(x) __builtin_popcountll(x)
 #define zrobits(x) __builtin_ctzll(x)
 #define mod 1000000007
-#define inf 1e18
+#define inf 1e9
 #define ps(x, y) fixed << setprecision(y) << x
 #define testCase(x) int x; cin >> x; while (x--)
 #define FIO ios_base::sync_with_stdio(0); cin.tie(0); cout.tie(0)
@@ -19,17 +19,22 @@ typedef tree<int, null_type, less<int>, rb_tree_tag, tree_order_statistics_node_
 // clang-format on
 
 unordered_map<int, vector<int>> adj;
-unordered_map<int, bool> vis;
+unordered_map<int, int> dist;
 
-void dfs(int src, int ttl) {
-    vis[src] = true;
-    if (ttl == 0) {
-        return;
-    }
+void bfs(int src) {
+    dist[src] = 0;
+    queue<int> q;
+    q.push(src);
 
-    for (auto node : adj[src]) {
-        if (!vis[node]) {
-            dfs(node, ttl - 1);
+    while (!q.empty()) {
+        int frnt = q.front();
+        q.pop();
+
+        for (auto node : adj[frnt]) {
+            if (dist[frnt] + 1 < dist[node]) {
+                dist[node] = dist[frnt] + 1;
+                q.push(node);
+            }
         }
     }
 }
@@ -49,10 +54,20 @@ int32_t main() {
         }
 
         int src, ttl;
-        while (cin >> src >> ttl && (src > 0 && ttl > 0)) {
-            vis.clear();
-            dfs(src, ttl);
-            int ans = adj.size() - vis.size();
+        while (cin >> src >> ttl && (src + ttl != 0)) {
+            dist.clear();
+
+            for (auto u : adj) {
+                dist[u.first] = inf;
+            }
+
+            bfs(src);
+
+            int ans = 0;
+            for (auto distance : dist) {
+                if (distance.second > ttl) ans++;
+            }
+
             cout << "Case " << ++c << ": " << ans
                  << " nodes not reachable from node " << src
                  << " with TTL = " << ttl << "." << nl;
