@@ -34,6 +34,8 @@ int main() {
 
         ll dgt = log2(x) + 1;
         ll num = pow(2, dgt + 1);
+
+        cout << "Changed" << nl;
     }
 
     return 0;
