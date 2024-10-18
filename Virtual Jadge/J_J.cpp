@@ -21,25 +21,30 @@ typedef tree<int, null_type, less<int>, rb_tree_tag, tree_order_statistics_node_
 int main() {
     FIO;
 
-    int n;
-    cin >> n;
+    int n, m;
+    cin >> n >> m;
 
-    int tmp = n;
-    bool flag = false;
-
-    while (tmp) {
-        int d = tmp % 10;
-        tmp /= 10;
-        if (d == 7) {
-            flag = true;
-            break;
+    map<int, vector<pair<int, int>>> add;
+    for (int i = 0; i < n; i++) {
+        for (int j = 0; j < m; j++) {
+            int c;
+            cin >> c;
+            add[c].push_back({i, j});
         }
     }
 
-    if (flag)
-        cout << "Yes" << nl;
-    else
-        cout << "No" << nl;
+    ll ans = 0;
+
+    for (auto v : add) {
+        for (int i = 0; i < v.second.size(); i++) {
+            for (int j = i + 1; j < v.second.size(); j++) {
+                ans += (2 * (abs(v.second[i].first - v.second[j].first) +
+                             abs(v.second[i].second - v.second[j].second)));
+            }
+        }
+    }
+
+    cout << ans << nl;
 
     return 0;
 }
